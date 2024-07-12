@@ -1,0 +1,74 @@
+@import url(https://fonts.googleapis.com/css?family=Comic+Neue:300,300italic,regular,italic,700,700italic);
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.comic {
+  font-family: "Comic Neue", sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+html {
+  font-size: 16px;
+}
+
+@media (max-width: 1024px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 780px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 540px) {
+  html {
+    font-size: 10px;
+  }
+}
+
+/* Active link class */
+.nuxt-link-exact-active {
+  position: relative;
+  color: rgb(15, 53, 156);
+  font-weight: 500;
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -0.8rem;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 3px;
+    background-color: rgb(15, 53, 156);
+  }
+}
+
+.ant-modal {
+  width: 50vw !important;
+}
+.ant-select-selection__rendered {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* padding: 0.1rem 0; */
+}
+.ant-modal-footer {
+  display: none;
+}
