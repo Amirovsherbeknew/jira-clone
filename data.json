@@ -1,0 +1,31 @@
+{
+  "services": [
+    {
+      "name": "Electron Application Management Service",
+      "slug": "electron_application_management_service",
+      "serviceItems": [
+        {
+          "slug": "eam-1459",
+          "name": "EAM-1459",
+          "title": "[FE] Umumiy xaritaga qaytish bosilganda"
+        },
+        {
+          "slug": "asda_sdf",
+          "name": "Asda Sdf",
+          "title": "[ASD] Asdfs Asdf Gdsf"
+        }
+      ]
+    },
+    {
+      "name": "Lorem ipsum dolor sit amet",
+      "slug": "lorem_ipsum_dolor_sit_amet",
+      "serviceItems": [
+        {
+          "slug": "eam-1459",
+          "name": "EAM-1459",
+          "title": "[FE] Umumiy xaritaga qaytish bosilganda"
+        }
+      ]
+    }
+  ]
+}

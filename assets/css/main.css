@@ -42,7 +42,7 @@ html {
 }
 
 /* Active link class */
-.nuxt-link-exact-active {
+/* .nuxt-link-exact-active {
   position: relative;
   color: rgb(15, 53, 156);
   font-weight: 500;
@@ -57,7 +57,7 @@ html {
     height: 3px;
     background-color: rgb(15, 53, 156);
   }
-}
+} */
 
 .ant-modal {
   width: 50vw !important;

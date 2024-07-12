@@ -52,7 +52,7 @@ export default {
         <nuxt-link to="/your-work" class="tabHover">
           Your work <i class="fa-solid fa-angle-down text-[0.8rem]"></i>
         </nuxt-link>
-        <nuxt-link to="projects" class="tabHover">
+        <nuxt-link to="/projects" class="tabHover">
           Projects <i class="fa-solid fa-angle-down text-[0.8rem]"></i>
         </nuxt-link>
         <nuxt-link to="filters" class="tabHover">
