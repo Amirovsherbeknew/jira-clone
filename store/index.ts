@@ -4,6 +4,7 @@ interface State {
 
 export const state = () => ({
   openSidebar: 0,
+  linkItems: [],
 });
 
 export const mutations = {
