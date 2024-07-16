@@ -1,7 +1,10 @@
 <script lang="ts">
+import Vue from "vue";
 import { VueEditor } from "vue2-editor";
 import IconBuild from "../IconBuild.vue";
-import Vue from "vue";
+import { IUser } from "~/store";
+import { v4 as uuidv4 } from "uuid";
+import { Issue } from "../../types/types";
 interface CreateModal extends Vue {
   isBoolean: boolean;
 }
@@ -18,6 +21,7 @@ interface ICreateModal {
   content: string;
   reporter: string;
   priority: string;
+  dateStart: string;
   dateDue: string;
   estimate: string;
   blocks: string;
@@ -25,7 +29,8 @@ interface ICreateModal {
   moreOpen: boolean;
   tooltip: boolean;
   assigneeValue: string[];
-  options: IAssignee[];
+  relatedIssues: string[];
+  tempIssues: string[];
 }
 export default Vue.extend({
   props: {
@@ -44,11 +49,13 @@ export default Vue.extend({
       value2: "task",
       // Status
       status: "To do",
-      // Estimate
+      // Duration
       estimate: "",
       // More open is opened
       moreOpen: false,
+      // priority
       // Tooltip is opened
+      // dateTo
       tooltip: false,
       // summary
       summary: "",
@@ -56,6 +63,8 @@ export default Vue.extend({
       reporter: "",
       // priority
       priority: "Medium",
+      // Start Date
+      dateStart: "",
       // Due Date
       dateDue: "",
       // Vue editor content
@@ -66,29 +75,96 @@ export default Vue.extend({
       anotherIssue: false,
       // Assign value
       assigneeValue: [],
-      options: ["Lucy", "John", "Wick"].map((item) => ({
-        value: item,
-        label: `<p>${item}</p>`,
-      })),
+      relatedIssues: [],
+      tempIssues: [],
+      // options: ["Lucy", "John", "Wick"].map((item) => ({
+      //   value: item,
+      //   label: `<p>${item}</p>`,
+      // })),
     };
   },
+  computed: {
+    options() {
+      return this.$store.state.users.map((user: IUser) => ({
+        value: user.name,
+        label: `<p>${user.name}</p>`,
+      }));
+    },
+    getIssues() {
+      return this.relatedIssues?.map((issueRelated: string) => ({
+        value: issueRelated,
+        label: `<p>${issueRelated}</p>`,
+      }));
+    },
+  },
+  async mounted() {
+    // @ts-ignore
+    await this.fetchUsers();
+    // @ts-ignore
+    await this.fetchIssues();
+  },
   methods: {
-    handleSubmit(e: Event) {
-      e.preventDefault();
-      console.log(
-        this.value1,
-        this.value2,
-        this.status,
-        this.estimate,
-        this.summary,
-        this.reporter,
-        this.priority,
-        this.dateDue,
-        this.content,
-        this.blocks,
-        this.anotherIssue,
-        this.assigneeValue
+    async fetchUsers(): Promise<void> {
+      const axios = await import("axios");
+      const res = await axios.default.get<IUser[]>(
+        "http://localhost:4000/users"
       );
+      this.$store.dispatch("handleUsers", res.data);
+    },
+    async fetchIssues(): Promise<void> {
+      const axios = await import("axios");
+      const res = await axios.default("http://localhost:4000/issues");
+      // console.log(res.data);
+      this.relatedIssues = res.data.map((issue: Issue) => issue.summary);
+      console.log(this.relatedIssues);
+    },
+    async addIssue(): Promise<void> {
+      const axios = await import("axios");
+      try {
+        const res = await axios.default.post("http://localhost:4000/issues", {
+          id: uuidv4(),
+          project: this.value1,
+          type: this.value2,
+          status: this.status,
+          duration: this.estimate,
+          summary: this.summary,
+          reporter: this.reporter,
+          priority: this.priority,
+          dateStart: this.dateStart,
+          dateTo: this.dateDue,
+          description: this.content,
+          blocks: this.blocks,
+          assigneeValue: Array.from(this.assigneeValue),
+          relatedIssues: Array.from(this.tempIssues),
+        });
+      } catch (err: TypeError | any | unknown) {
+        console.log(err.message);
+      } finally {
+        alert("Added new issue");
+      }
+    },
+    async handleSubmit(e: Event) {
+      e.preventDefault();
+      // @ts-ignore
+      await this.addIssue();
+      this.value1 = "";
+      this.value2 = "";
+      this.status = "";
+      this.estimate = "";
+      this.summary = "";
+      this.reporter = "";
+      this.priority = "";
+      this.dateStart = "";
+      this.dateDue = "";
+      this.content = "";
+      this.blocks = "";
+      this.anotherIssue = false;
+      this.assigneeValue = [];
+      // @ts-ignore
+      this.setMoreOpen();
+      this.isBoolean = false;
+      // @ts-ignore
+      this.$router.push("/");
     },
     setMoreOpen() {
       this.moreOpen = !this.moreOpen;
@@ -119,6 +195,7 @@ export default Vue.extend({
       const input = this.$refs.dropInput as HTMLInputElement;
       const dropZone = this.$refs.dropZone as HTMLDivElement;
       if (input.files?.length) {
+        // @ts-ignore
         this.updateThumbnail(dropZone, input.files[0]);
       }
     },
@@ -163,6 +240,7 @@ export default Vue.extend({
       console.log("Drop", e.dataTransfer?.files);
       if (e.dataTransfer?.files.length) {
         input.files = e.dataTransfer.files;
+        // @ts-ignore
         this.updateThumbnail(dropZone, e.dataTransfer.files[0]);
       }
       dropZone.classList.remove("drop-zone--over");
@@ -407,8 +485,8 @@ export default Vue.extend({
             style="width: 100%"
           >
             <a-select-option
-              v-for="(item, index) in options"
-              :key="index"
+              v-for="item in options"
+              :key="item.id"
               :value="item.value"
             >
               <span v-html="item.label"></span>
@@ -535,7 +613,7 @@ export default Vue.extend({
           <label class="block text-[0.8rem] text-black font-semibold"
             >Start date</label
           >
-          <input type="date" class="input-global" />
+          <input type="date" class="input-global" v-model="dateStart" />
           <div class="date-start__ps mt-2 text-[0.8rem]">
             Choose a category using a popup picker window.
           </div>
@@ -562,9 +640,18 @@ export default Vue.extend({
           </a-select>
           <p class="mt-2">
             <a-select
-              value="Select option"
+              v-model="tempIssues"
               style="color: black !important; width: 45%"
-            ></a-select>
+              mode="multiple"
+            >
+              <a-select-option
+                v-for="(item, ind) in getIssues"
+                :key="ind"
+                :value="item.value"
+              >
+                <span v-html="item.label"></span>
+              </a-select-option>
+            </a-select>
           </p>
         </div>
       </div>

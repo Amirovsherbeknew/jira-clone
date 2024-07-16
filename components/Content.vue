@@ -20,6 +20,7 @@ export default Content;
 </template>
 <style scoped>
 .content {
+  position: relative;
   height: 91.5vh;
   height: 91.5vh;
   color: black;

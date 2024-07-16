@@ -36,7 +36,10 @@ export default {
   css: ["~/assets/css/main.css", "~/assets/css/tailwind.css"],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [{ src: "~/plugins/ant-design-vue", ssr: true }, "~/store/index.ts"],
+  plugins: [
+    { src: "~/plugins/ant-design-vue", ssr: true },
+    "~/plugins/router.ts",
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: [
