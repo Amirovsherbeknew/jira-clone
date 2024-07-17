@@ -33,7 +33,7 @@ export default Vue.extend({
 
 <template>
   <div
-    class="loader-wrapper absolute top-0 left-0 h-full w-full bg-[rgba(0,0,0,0.25)] flex items-center justify-center text-blue-600"
+    class="loader-wrapper absolute top-0 left-0 h-full w-full bg-[rgba(0,0,0,0.12)] flex items-center justify-center text-blue-600"
     v-if="$store.getters.getUsers?.length === 0"
   >
     <div class="loader"></div>

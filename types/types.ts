@@ -1,4 +1,5 @@
 export interface Issue {
+  isDone: false;
   id: string | number;
   project: string;
   type: string;
@@ -9,6 +10,7 @@ export interface Issue {
   priority: string;
   dateStart: string;
   dateTo: string;
+  labels: string;
   description?: string;
   blocks: string;
   assigneeValue?: string[];

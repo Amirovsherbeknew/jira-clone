@@ -1,6 +1,6 @@
 <script lang="ts">
 import Vue from "vue";
-import db from "../../data.json";
+import { getProjects } from "@/services/api";
 
 interface IServiceItem {
   name: string;
@@ -20,8 +20,13 @@ export default Vue.extend({
       projects: [],
     };
   },
-  mounted() {
-    this.projects = db.services;
+  computed: {
+    Projects() {
+      return this.projects || [];
+    },
+  },
+  async mounted() {
+    this.projects = await getProjects();
   },
 });
 </script>
@@ -32,7 +37,7 @@ export default Vue.extend({
       <h1>Projects</h1>
       <ul class="project-links">
         <li
-          v-for="projectItem in projects"
+          v-for="projectItem in Projects"
           :key="projectItem.name"
           class="mt-1"
         >
@@ -40,7 +45,10 @@ export default Vue.extend({
             :key="projectItem.name"
             :to="'projects/' + projectItem.slug"
             class="items"
-            >{{ projectItem.name }}</nuxt-link
+            >{{
+              projectItem.name[0].toUpperCase() +
+              projectItem.name.slice(1).toLowerCase()
+            }}</nuxt-link
           >
         </li>
       </ul>

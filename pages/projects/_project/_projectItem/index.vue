@@ -1,7 +1,7 @@
 <script lang="ts">
+import { getIssueById } from "~/services/api";
 import Edit from "../../../../assets/icons/Edit";
 import BreadCrumb from "../../../../components/BreadCrumb.vue";
-import db from "../../../../data.json";
 export default {
   components: {
     BreadCrumb,
@@ -17,18 +17,12 @@ export default {
       focus: false as boolean,
     };
   },
-  mounted() {
+  async mounted() {
+    // @ts-ignore
     this.slug = this.$route.params.projectItem;
-    for (const service of db.services) {
-      for (const serviceItem of service.serviceItems) {
-        if (serviceItem.slug === this.slug) {
-          this.service = service;
-          this.serviceItem = serviceItem;
-          this.name = serviceItem.name;
-          this.title = serviceItem.title;
-        }
-      }
-    }
+    const issue = await getIssueById(this.slug);
+    this.title = issue[0].summary;
+    console.log("Issue", issue, "Title", this.title);
   },
   methods: {
     handleChange(e: Event) {
@@ -37,6 +31,7 @@ export default {
     handleClick() {
       this.focus = true;
       console.log("Hello");
+      // @ts-ignore
       this.title = this.$refs.titleRef.textContent;
       console.log(this.title);
     },

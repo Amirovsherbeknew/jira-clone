@@ -31,6 +31,7 @@ interface ICreateModal {
   assigneeValue: string[];
   relatedIssues: string[];
   tempIssues: string[];
+  labels: string;
 }
 export default Vue.extend({
   props: {
@@ -73,6 +74,8 @@ export default Vue.extend({
       blocks: "",
       // Another issue
       anotherIssue: false,
+      // Labels
+      labels: "",
       // Assign value
       assigneeValue: [],
       relatedIssues: [],
@@ -116,7 +119,7 @@ export default Vue.extend({
       const res = await axios.default("http://localhost:4000/issues");
       // console.log(res.data);
       this.relatedIssues = res.data.map((issue: Issue) => issue.summary);
-      console.log(this.relatedIssues);
+      // console.log(this.relatedIssues);
     },
     async addIssue(): Promise<void> {
       const axios = await import("axios");
@@ -132,6 +135,7 @@ export default Vue.extend({
           priority: this.priority,
           dateStart: this.dateStart,
           dateTo: this.dateDue,
+          labels: this.labels,
           description: this.content,
           blocks: this.blocks,
           assigneeValue: Array.from(this.assigneeValue),
@@ -156,6 +160,7 @@ export default Vue.extend({
       this.priority = "";
       this.dateStart = "";
       this.dateDue = "";
+      this.labels = "";
       this.content = "";
       this.blocks = "";
       this.anotherIssue = false;
@@ -553,7 +558,8 @@ export default Vue.extend({
           <div class="labels-label text-[0.8rem] !font-semibold !text-black">
             Labels
           </div>
-          <a-select style="color: black !important; width: 45%"> </a-select>
+          <!-- <a-select style="color: black !important; width: 45%"> </a-select> -->
+          <input type="text" class="input-global" v-model="labels" />
         </div>
         <div class="date-due mt-4">
           <div class="date-due-label text-[0.8rem] !font-semibold !text-black">
