@@ -61,9 +61,25 @@ export default {
         <nuxt-link to="dashboards" class="tabHover">
           Dashboards <i class="fa-solid fa-angle-down text-[0.8rem]"></i>
         </nuxt-link>
-        <nuxt-link to="teams" class="tabHover">
+        <!-- <nuxt-link to="teams" class="tabHover">
           Teams <i class="fa-solid fa-angle-down text-[0.8rem]"></i>
-        </nuxt-link>
+        </nuxt-link> -->
+        <a-dropdown>
+          <a class="ant-dropdown-link tabHover" @click.prevent>
+            Teams
+            <i class="fa-solid fa-angle-down text-[0.8rem]"></i>
+          </a>
+          <template #overlay>
+            <a-menu>
+              <a-menu-item>
+                <a href="/create-user">Create user</a>
+              </a-menu-item>
+              <a-menu-item>
+                <a href="/users">Users</a>
+              </a-menu-item>
+            </a-menu>
+          </template>
+        </a-dropdown>
         <nuxt-link to="plans" class="tabHover">
           Plans <i class="fa-solid fa-angle-down text-[0.8rem]"></i>
         </nuxt-link>
