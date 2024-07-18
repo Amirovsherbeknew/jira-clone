@@ -37,10 +37,9 @@ export default Vue.extend({
       this.updateUser();
     },
     async updateUser() {
-      const axios = await import("axios");
       console.log(this.id, this.name, this.job);
       try {
-        const res = await axios.default.put(
+        const res = await this.$axios.$put(
           "http://localhost:4000/users/" + this.id,
           {
             id: this.id,

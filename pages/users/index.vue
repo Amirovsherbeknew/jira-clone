@@ -8,18 +8,18 @@ export default Vue.extend({
   },
   methods: {
     async fetchUsers(): Promise<void> {
-      const axios = await import("axios");
-      const res = await axios.default.get<IUser[]>(
+      // @ts-ignore
+      const res = await this.$axios.$get<IUser[]>(
         "http://localhost:4000/users"
       );
-      this.$store.dispatch("handleUsers", res.data);
+      this.$store.dispatch("handleUsers", res);
     },
     async deleteUser(e: Event, userId: number | string): Promise<void> {
       e.preventDefault();
       try {
         const BASE_URL = "http://localhost:4000/users/" + userId;
-        const axios = await import("axios");
-        const res = await axios.default.delete(BASE_URL);
+        // @ts-ignore
+        const res = await this.$axios.$delete(BASE_URL);
         this.$store.dispatch("removeUser", userId);
       } catch (err: TypeError | any | unknown) {
         console.log(err.message);

@@ -29,9 +29,8 @@ export default Vue.extend({
       this.addUser();
     },
     async addUser() {
-      const axios = await import("axios");
       try {
-        const res = await axios.default.post("http://localhost:4000/users", {
+        const res = await this.$axios.$post("http://localhost:4000/users", {
           id: uuidv4(),
           name: this.name.trim(),
           job: this.job.trim(),

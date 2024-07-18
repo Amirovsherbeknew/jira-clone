@@ -25,62 +25,148 @@ export default Vue.extend({
       projectItems: [] as IServiceItem[],
       name: "" as string,
       title: "" as string,
+      loading: true as boolean,
       issues: [] as Issue[],
+      issueSearchText: "" as string,
+      issueProps: [
+        { label: "Type", name: "type", show: true },
+        { label: "ID", name: "id", show: true },
+        { label: "Summary", name: "summary", show: true },
+        { label: "Status", name: "status", show: true },
+        { label: "Assignee", name: "assigneeValue", show: true },
+        { label: "Due Date", name: "dateTo", show: true },
+        { label: "Labels", name: "labels", show: true },
+        { label: "Created", name: "dateStart", show: true },
+        { label: "Reporter", name: "reporter", show: true },
+      ] as { label: string; name: string; show: boolean }[],
     };
+  },
+  methods: {
+    toggleColumn(label: string) {
+      const ind = this.issueProps.findIndex((p) => p.label === label);
+      // if (prop) {
+      //   prop.show = !prop.show;
+      // }
+      this.issueProps[ind].show = !this.issueProps[ind].show;
+    },
   },
   created() {
     // @ts-ignore
     this.name = this.$route.params.project as string;
   },
   async mounted() {
-    this.issues = await getSpecificIssues(this.name);
-    console.log(this.issues);
+    this.issues = await getSpecificIssues(
+      this.$axios,
+      this.name,
+      this.issueSearchText
+    );
+    this.loading = false;
+  },
+  watch: {
+    issueSearchText: {
+      async handler(newSearchText: string) {
+        this.issues = await getSpecificIssues(
+          this.$axios as any,
+          this.name,
+          newSearchText
+        );
+      },
+      immediate: true,
+    },
   },
 });
 </script>
 <template>
-  <div class="project">
+  <div
+    class="loader-wrapper absolute top-0 left-0 h-full w-full bg-[rgba(0,0,0,0.12)] flex items-center justify-center text-blue-600"
+    v-if="loading"
+  >
+    <div class="loader"></div>
+  </div>
+  <div class="project" v-else>
     <BreadCrumb />
-    <h1 class="text-[1.2rem]">Issues</h1>
+    <div class="project-issues__header flex items-center justify-between gap-4">
+      <h1 class="text-[1.2rem] h-[100%] flex items-center">Issues</h1>
+      <a-dropdown
+        :trigger="['click']"
+        class="issues-filter-dropdown"
+        placement="bottomRight"
+        overlayClassName="!w-[20rem]"
+      >
+        <a class="ant-dropdown-link" @click.prevent>
+          <span>Click me</span>
+          &nbsp;
+          <i class="fa-solid fa-angle-down"></i>
+        </a>
+        <template #overlay>
+          <div class="!translate-y-[1rem] bg-white rounded-md">
+            <div class="dropdown-header px-4 pt-4">
+              <span>Columns</span>
+              <div class="mt-2 flex gap-2 items-center">
+                <div class="btn btn--dark">My defaults</div>
+                <div class="btn btn--light">Filter</div>
+              </div>
+              <div class="issue-search__wrapper">
+                <input
+                  type="text"
+                  v-model="issueSearchText"
+                  placeholder="Search"
+                  @click="(e) => e.stopPropagation()"
+                />
+                <span class="search-logo"
+                  ><i class="fa-solid fa-magnifying-glass"></i
+                ></span>
+              </div>
+            </div>
+            <a-menu class="!py-4">
+              <a-menu-divider />
+              <a-menu-item v-for="{ show, label } in issueProps" :key="label">
+                <input
+                  type="checkbox"
+                  :checked="show"
+                  :id="label"
+                  @change="toggleColumn(label)"
+                  @click="(e) => e.stopPropagation()"
+                />
+                <label :for="label" @click="(e) => e.stopPropagation()">{{
+                  label
+                }}</label>
+              </a-menu-item>
+            </a-menu>
+          </div>
+        </template>
+      </a-dropdown>
+    </div>
     <table class="issues-table">
       <thead>
         <tr>
-          <th>Type</th>
-          <th>ID</th>
-          <th>Summary</th>
-          <th>Status</th>
-          <th>Assignee</th>
-          <th>Due Date</th>
-          <th>Labels</th>
-          <th>Created</th>
-          <th>Reporter</th>
+          <template v-for="{ label, show } in issueProps">
+            <th v-if="show" v-bind:key="label">
+              <span v-if="show">{{ label }}</span>
+            </th>
+          </template>
         </tr>
       </thead>
       <tbody>
         <tr v-for="issue in issues" :key="issue.id">
-          <td>{{ issue.type }}</td>
-          <td>{{ issue.id }}</td>
-          <td>
-            <nuxt-link :to="`${name}/${issue.id}`" class="items">{{
-              issue.summary
-            }}</nuxt-link>
-          </td>
-          <td>{{ issue.status }}</td>
-          <td>{{ issue.assigneeValue.join(" ") }}</td>
-          <td>{{ issue.dateTo }}</td>
-          <td>{{ issue.labels }}</td>
-          <td>{{ issue.dateStart }}</td>
-          <td>{{ issue.reporter }}</td>
+          <template v-for="{ label, show, name } in issueProps">
+            <td v-if="show" :key="label">
+              <span v-if="name === 'summary'">
+                <nuxt-link :to="name + '/' + issue.id" class="items">
+                  {{ issue[name] }}
+                </nuxt-link>
+              </span>
+              <span v-else-if="name === 'assigneeValue'">
+                {{ issue[name]?.join(" ") }}
+              </span>
+              <span v-else>
+                {{ issue[name] }}
+              </span>
+            </td>
+          </template>
         </tr>
       </tbody>
     </table>
-    <!-- <ul>
-      <li v-for="item in issues" :key="item.id">
-        <nuxt-link :to="`${name}/${item.id}`" class="items">{{
-          item.summary
-        }}</nuxt-link>
-      </li>
-    </ul> -->
   </div>
 </template>
 
@@ -99,6 +185,41 @@ export default Vue.extend({
   border-spacing: 0;
   border-radius: 10px;
   border: 1px solid gray;
+}
+.issues-filter-dropdown {
+  border-radius: 4px;
+  background-color: rgb(1, 27, 48);
+  padding: 0.3rem 0.5rem;
+  color: white;
+}
+.issue-search__wrapper {
+  position: relative;
+  margin-top: 1rem;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  background-color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.issue-search__wrapper input {
+  border: none;
+  outline: none;
+  width: 100%;
+}
+.btn {
+  border-radius: 4px;
+  padding: 0.3rem 0.5rem;
+}
+.btn--light {
+  background-color: white;
+  color: rgb(1, 27, 48);
+}
+.btn--dark {
+  background-color: rgb(1, 27, 48);
+  color: white;
 }
 th,
 td {

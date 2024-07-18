@@ -26,7 +26,7 @@ export default Vue.extend({
     },
   },
   async mounted() {
-    this.projects = await getProjects();
+    this.projects = await getProjects(this.$axios);
   },
 });
 </script>
