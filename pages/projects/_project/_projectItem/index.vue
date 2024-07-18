@@ -20,13 +20,14 @@ export default {
   async mounted() {
     // @ts-ignore
     this.slug = this.$route.params.projectItem;
-    const issue = await getIssueById(this.slug);
+    const issue = await getIssueById(this.$axios, this.slug);
     this.title = issue[0].summary;
     console.log("Issue", issue, "Title", this.title);
   },
   methods: {
     handleChange(e: Event) {
-      const target = e.target as HTMLParagraphElement;
+      let target = e.target as HTMLParagraphElement;
+      console.log(target?.textContent);
     },
     handleClick() {
       this.focus = true;

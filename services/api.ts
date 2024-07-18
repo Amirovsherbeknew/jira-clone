@@ -1,33 +1,37 @@
 import axios from "axios";
+import { NuxtAxiosInstance } from "@nuxtjs/axios";
 
-export const getProjects = async () => {
+export const getProjects = async (axios: NuxtAxiosInstance) => {
   try {
-    const res = await axios.get("http://localhost:4000/projects");
-    return res.data;
+    const res = await axios.$get("http://localhost:4000/projects");
+    return res;
   } catch (err: TypeError | any | unknown) {
     console.log(err.message);
   }
 };
 
-export const getSpecificIssues = async (project: string) => {
-  const axios = await import("axios");
+export const getSpecificIssues = async (
+  axios: NuxtAxiosInstance,
+  project: string,
+  searchText: string
+) => {
   try {
-    const res = await axios.default.get(
-      `http://localhost:4000/issues?project=${project}`
+    const res = await axios.$get(
+      `http://localhost:4000/issues?project=${project}&q=${searchText}`
     );
-    return res.data;
+    return res;
   } catch (err: TypeError | any | unknown) {
     console.log(err.message);
   }
 };
 
-export const getIssueById = async (issueId: string) => {
-  const axios = await import("axios");
+export const getIssueById = async (
+  axios: NuxtAxiosInstance,
+  issueId: string
+) => {
   try {
-    const res = await axios.default.get(
-      `http://localhost:4000/issues?id=${issueId}`
-    );
-    return res.data;
+    const res = await axios.$get(`http://localhost:4000/issues?id=${issueId}`);
+    return res;
   } catch (err: TypeError | any | unknown) {
     console.log(err.message);
   }

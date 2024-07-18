@@ -80,10 +80,6 @@ export default Vue.extend({
       assigneeValue: [],
       relatedIssues: [],
       tempIssues: [],
-      // options: ["Lucy", "John", "Wick"].map((item) => ({
-      //   value: item,
-      //   label: `<p>${item}</p>`,
-      // })),
     };
   },
   computed: {
@@ -108,23 +104,20 @@ export default Vue.extend({
   },
   methods: {
     async fetchUsers(): Promise<void> {
-      const axios = await import("axios");
-      const res = await axios.default.get<IUser[]>(
+      const res = await this.$axios.$get<IUser[]>(
         "http://localhost:4000/users"
       );
-      this.$store.dispatch("handleUsers", res.data);
+      this.$store.dispatch("handleUsers", res);
     },
     async fetchIssues(): Promise<void> {
-      const axios = await import("axios");
-      const res = await axios.default("http://localhost:4000/issues");
-      // console.log(res.data);
-      this.relatedIssues = res.data.map((issue: Issue) => issue.summary);
+      const res = await this.$axios.$get("http://localhost:4000/issues");
+      // console.log(res);
+      this.relatedIssues = res.map((issue: Issue) => issue.summary);
       // console.log(this.relatedIssues);
     },
     async addIssue(): Promise<void> {
-      const axios = await import("axios");
       try {
-        const res = await axios.default.post("http://localhost:4000/issues", {
+        const res = await this.$axios.$post("http://localhost:4000/issues", {
           id: uuidv4(),
           project: this.value1,
           type: this.value2,
@@ -647,6 +640,7 @@ export default Vue.extend({
           <p class="mt-2">
             <a-select
               v-model="tempIssues"
+              placeholder="Choose related issue"
               style="color: black !important; width: 45%"
               mode="multiple"
             >

@@ -53,13 +53,15 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ["vue2-editor/nuxt"],
+  modules: ["vue2-editor/nuxt", "@nuxtjs/axios"],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 
   // Tailwind config
   build: {
+    // Resolving @nuxtjs/axios issues related to import & require
+    transpile: ["axios"], // Add this line
     postcss: {
       plugins: {
         tailwindcss: {},
