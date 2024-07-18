@@ -26,7 +26,8 @@ export default {
   },
   methods: {
     handleChange(e: Event) {
-      const target = e.target as HTMLParagraphElement;
+      let target = e.target as HTMLParagraphElement;
+      console.log(target?.textContent);
     },
     handleClick() {
       this.focus = true;
