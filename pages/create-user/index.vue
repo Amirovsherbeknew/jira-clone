@@ -108,6 +108,7 @@ export default Vue.extend({
   transform: translate(-50%, -50%);
   width: 600px;
   max-width: 100%;
+  background-color: #ffffff;
   font-size: 1rem;
   padding: 0.8rem 2rem;
   padding-bottom: 2rem;

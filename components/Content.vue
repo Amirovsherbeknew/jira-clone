@@ -27,6 +27,7 @@ export default Content;
   transition-duration: 0.4s;
   transform: translateX(0);
   padding: 1.5rem 1rem;
+  background-color: lightgreen;
 }
 .contentRight {
   margin-left: 15vw;
