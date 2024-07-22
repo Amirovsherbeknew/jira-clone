@@ -39,6 +39,7 @@ export default {
   plugins: [
     { src: "~/plugins/ant-design-vue", ssr: true },
     "~/plugins/router.ts",
+    "~/plugins/axios.ts",
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

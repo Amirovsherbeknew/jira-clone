@@ -59,6 +59,7 @@ html {
   }
 } */
 
+/* Ant restyling */
 .ant-modal {
   width: 50vw !important;
 }
@@ -95,4 +96,35 @@ html {
   100% {
     transform: rotate(1turn);
   }
+}
+
+/* scrollbar styling */
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.btn-func {
+  border-radius: 4px;
+  background-color: rgb(250, 238, 238);
+  width: fit-content;
+  padding: 0.5rem 0.8rem;
+  color: black;
+  font-size: 1rem;
+  cursor: pointer;
 }
