@@ -5,6 +5,7 @@ import IconBuild from "../IconBuild.vue";
 import { IUser } from "~/store";
 import { v4 as uuidv4 } from "uuid";
 import { Issue } from "../../types/types";
+import { createIssue, getIssues, getUsers } from "~/services/api";
 interface CreateModal extends Vue {
   isBoolean: boolean;
 }
@@ -96,7 +97,7 @@ export default Vue.extend({
       }));
     },
   },
-  async mounted() {
+  async created() {
     // @ts-ignore
     await this.fetchUsers();
     // @ts-ignore
@@ -104,20 +105,21 @@ export default Vue.extend({
   },
   methods: {
     async fetchUsers(): Promise<void> {
-      const res = await this.$axios.$get<IUser[]>(
-        "http://localhost:4000/users"
-      );
+      // @ts-ignore
+      const res = await getUsers(this.$api);
       this.$store.dispatch("handleUsers", res);
     },
     async fetchIssues(): Promise<void> {
-      const res = await this.$axios.$get("http://localhost:4000/issues");
+      // @ts-ignore
+      const res = await getIssues(this.$api);
       // console.log(res);
       this.relatedIssues = res.map((issue: Issue) => issue.summary);
       // console.log(this.relatedIssues);
     },
     async addIssue(): Promise<void> {
       try {
-        const res = await this.$axios.$post("http://localhost:4000/issues", {
+        // @ts-ignore
+        const res = await createIssue(this.$api, {
           id: uuidv4(),
           project: this.value1,
           type: this.value2,

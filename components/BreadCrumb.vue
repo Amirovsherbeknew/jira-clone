@@ -7,7 +7,7 @@ export default Vue.extend({
       links: [] as [string, string][],
     };
   },
-  mounted() {
+  created() {
     // @ts-ignore
     const arr: string[] = this.$route.path
       .split("/")

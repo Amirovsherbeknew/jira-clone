@@ -26,7 +26,7 @@ export default Content;
   color: black;
   transition-duration: 0.4s;
   transform: translateX(0);
-  padding: 2rem 2.5rem;
+  /* padding: 2rem 2.5rem; */
   background-color: lightgreen;
 }
 .contentRight {

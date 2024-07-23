@@ -1,22 +1,51 @@
-<script>
+<script lang="ts">
+import { Issue } from "~/types/types";
+import { getIssues } from "~/services/api";
+import sortByField from "~/utils/sortData";
 import AppsOpener from "../assets/icons/AppsOpener.vue";
 import Jira from "../assets/icons/Jira.vue";
 import Bell from "../assets/icons/Bell.vue";
+import IconMapper from "./IconMapper.vue";
+
 export default {
   components: {
     AppsOpener,
     Jira,
     Bell,
+    IconMapper,
   },
   data() {
     return {
       isAuthorized: "IA",
       searchInput: "",
       visiably: false,
+      issues: [] as Issue[],
+      moreIssues: false as boolean,
       // list: []
     };
   },
-  methods: {},
+  async created() {
+    try {
+      this.issues = await getIssues(this.$api);
+      // @ts-ignore
+      sortByField<Issue>(this.issues, "updated");
+      // console.log("Issue datas has been come");
+    } catch (err: TypeError | any | unknown) {
+      console.log(err.message);
+    }
+  },
+  computed: {
+    issueItems() {
+      return this.moreIssues
+        ? this.issues
+        : this.issues.slice(0, Math.min(this.issues.length, 5));
+    },
+  },
+  methods: {
+    handleMoreIssues(e: MouseEvent | Event) {
+      this.moreIssues = !this.moreIssues;
+    },
+  },
   // watch: {
   //  list: {
   //   deep:true,
@@ -55,8 +84,56 @@ export default {
         <nuxt-link to="/projects" class="tabHover">
           Projects <i class="fa-solid fa-angle-down text-[0.8rem]"></i>
         </nuxt-link>
-        <nuxt-link to="filters" class="tabHover">
-          Filters <i class="fa-solid fa-angle-down text-[0.8rem]"></i>
+        <nuxt-link to="/" class="tabHover">
+          <a-dropdown class="rounded-[20px]">
+            <a class="ant-dropdown-link" @click.prevent>
+              Filters <i class="fa-solid fa-angle-down text-[0.8rem]"></i>
+            </a>
+            <template #overlay>
+              <div class="dropdown-overlay__child" @click.stop>
+                <a-menu class="text-black font-semibold">
+                  <a-menu-item>Current Search</a-menu-item>
+                  <a-menu-item>Search for issues</a-menu-item>
+                  <a-menu-divider />
+                </a-menu>
+                <div class="text-wrapper">
+                  <span class="text-[0.8rem] !py-4 text-gray-800 font-semibold"
+                    >RECENT ISSUES</span
+                  >
+                </div>
+                <div class="issues-list-wrapper">
+                  <a-menu class="text-black font-semibold">
+                    <a-menu-item
+                      v-for="issue in issueItems"
+                      :key="issue.id"
+                      class="flex items-center gap-4"
+                    >
+                      <IconMapper :iconName="issue.type" />
+                    </a-menu-item>
+                  </a-menu>
+                </div>
+                <a-menu>
+                  <a-menu-item @click="handleMoreIssues">{{
+                    moreIssues ? "Hide" : "More..."
+                  }}</a-menu-item>
+                  <a-menu-divider />
+                  <a-menu-item>Input issues from CSV</a-menu-item>
+                  <a-menu-divider />
+                </a-menu>
+                <div class="text-wrapper">
+                  <span class="text-[0.8rem] !py-4 text-gray-800 font-semibold"
+                    >FILTERS</span
+                  >
+                </div>
+                <a-menu class="text-black font-semibold">
+                  <a-menu-item>My open issues</a-menu-item>
+                  <a-menu-item>Issues opened by me</a-menu-item>
+                  <a-menu-divider />
+                  <a-menu-item>Manage filters</a-menu-item>
+                </a-menu>
+              </div>
+            </template>
+          </a-dropdown>
         </nuxt-link>
         <nuxt-link to="dashboards" class="tabHover">
           Dashboards <i class="fa-solid fa-angle-down text-[0.8rem]"></i>
@@ -169,5 +246,36 @@ nav button {
 }
 nav button:hover {
   background-color: rgb(8, 60, 132);
+}
+.ant-dropdown {
+  border-radius: 6px !important;
+}
+.dropdown-overlay__child {
+  background-color: white !important;
+  border-radius: 6px !important;
+  transform: translateY(1.5rem);
+  box-shadow: 0 3px 6px 0 black;
+  padding-bottom: 0.8rem;
+  /* !bg-red-600 shadow-lg translate-y-6 */
+}
+.dropdown-overlay__child menu,
+.dropdown-overlay__child ul {
+  border-radius: 6px !important;
+}
+.text-wrapper {
+  padding: 0 1rem;
+  background-color: inherit;
+}
+
+.ant-menu-item {
+  height: 1.8rem !important;
+}
+
+.issues-list-wrapper {
+  margin: 0.6rem 0;
+  height: auto;
+  max-height: 15rem;
+  overflow: hidden;
+  overflow-y: auto;
 }
 </style>

@@ -1,65 +1,13 @@
 <script lang="ts">
 import Vue from "vue";
-import { getProjects } from "@/services/api";
-
-interface IServiceItem {
-  name: string;
-  title: string;
-  slug: string;
-}
-
-interface IService {
-  name: string;
-  slug: string;
-  serviceItems: IServiceItem[];
-}
+import ProjectsView from "~/components/ProjectsView.vue";
 
 export default Vue.extend({
-  data(): { projects: IService[] } {
-    return {
-      projects: [],
-    };
-  },
-  computed: {
-    Projects() {
-      return this.projects || [];
-    },
-  },
-  async mounted() {
-    this.projects = await getProjects(this.$axios);
+  components: {
+    ProjectsView,
   },
 });
 </script>
 <template>
-  <div class="projects">
-    <p v-if="projects.length === 0">Loading...</p>
-    <div v-else>
-      <h1>Projects</h1>
-      <ul class="project-links">
-        <li
-          v-for="projectItem in Projects"
-          :key="projectItem.name"
-          class="mt-1"
-        >
-          <nuxt-link
-            :key="projectItem.name"
-            :to="'projects/' + projectItem.slug"
-            class="items"
-            >{{
-              projectItem.name[0].toUpperCase() +
-              projectItem.name.slice(1).toLowerCase()
-            }}</nuxt-link
-          >
-        </li>
-      </ul>
-    </div>
-  </div>
+  <ProjectsView />
 </template>
-<style>
-.projects {
-  font-size: 1rem;
-}
-.items {
-  font-size: 1.2rem;
-}
-</style>
