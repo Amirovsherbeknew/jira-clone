@@ -1,0 +1,293 @@
+{
+  "users": [
+    {
+      "id": 2,
+      "name": "Wichk",
+      "job": "Backend developer"
+    },
+    {
+      "id": "15267dde-6679-4222-abd1-04505578b7bc",
+      "name": "John Nash",
+      "job": "plumber"
+    },
+    {
+      "id": "de5d5d7f-41a9-440b-b0b8-f427195b4b68",
+      "name": "Harry",
+      "job": "Potter"
+    },
+    {
+      "id": "d82ef3bd-717d-46ab-9569-7ac488abb9bd",
+      "name": "hhh",
+      "job": "fhgfhg"
+    }
+  ],
+  "projects": [
+    {
+      "name": "work",
+      "slug": "work"
+    },
+    {
+      "name": "education",
+      "slug": "education"
+    },
+    {
+      "name": "Electron application Management Service",
+      "slug": "electron_application_management_service"
+    }
+  ],
+  "issues": [
+    {
+      "id": "345dfg",
+      "isDone": false,
+      "project": "electron_application_management_service",
+      "type": "task",
+      "status": "To do",
+      "duration": "2w",
+      "summary": "[FE] Umumiy xaritaga qaytish bosilganda",
+      "reporter": "Lorem",
+      "priority": "Medium",
+      "dateStart": "2024-07-10",
+      "updated": "2024-07-10",
+      "dateTo": "2024-07-25",
+      "description": "<p>Some initial content</p>",
+      "blocks": "",
+      "assigneeValue": [
+        "John Nash"
+      ]
+    },
+    {
+      "id": "45bce86f-f03a-40bc-8048-0a5f1b7f92df",
+      "isDone": false,
+      "project": "education",
+      "type": "task",
+      "status": "To do",
+      "duration": "2w",
+      "summary": "Loremasdfasdfasdf",
+      "reporter": "Lorem",
+      "priority": "Medium",
+      "dateStart": "2024-07-10",
+      "updated": "2024-07-10",
+      "dateTo": "2024-07-25",
+      "description": "<p>Some initial content</p>",
+      "blocks": "",
+      "assigneeValue": [
+        "John Nash"
+      ]
+    },
+    {
+      "id": "0e15f5fb-c44a-401a-bb41-6d09493a17fd",
+      "isDone": false,
+      "project": "education",
+      "type": "task",
+      "status": "To do",
+      "duration": "2d",
+      "summary": "SDFa",
+      "reporter": "asd",
+      "priority": "Medium",
+      "dateStart": "2024-07-01",
+      "updated": "2024-07-01",
+      "description": "<p>Some initial content</p>",
+      "blocks": "",
+      "assigneeValue": [
+        "John Nash"
+      ]
+    },
+    {
+      "id": "59a35321-4ade-4fc3-a942-d25f9eb6db3f",
+      "isDone": false,
+      "project": "education",
+      "type": "task",
+      "status": "To do",
+      "duration": "",
+      "summary": "Lorem ipsum",
+      "reporter": "Lorem",
+      "priority": "Medium",
+      "dateStart": "2024-07-18",
+      "updated": "2024-07-18",
+      "dateTo": "2024-07-25",
+      "description": "<p>Some initial content</p>",
+      "blocks": "",
+      "assigneeValue": [
+        "John Nash"
+      ],
+      "relatedIssues": [
+        "S",
+        "D",
+        "F",
+        "a"
+      ]
+    },
+    {
+      "id": "d487a1ef-17a3-4bba-82b8-7208d5d20111",
+      "isDone": false,
+      "project": "education",
+      "type": "design story",
+      "status": "To do",
+      "duration": "4w",
+      "summary": "HOKK",
+      "reporter": "asdf",
+      "priority": "Medium",
+      "dateStart": "2024-07-25",
+      "updated": "2024-07-25",
+      "dateTo": "2024-07-04",
+      "description": "<p>Some initial content</p>",
+      "blocks": "is blocked by",
+      "assigneeValue": [
+        "John Nash"
+      ],
+      "relatedIssues": [
+        "L",
+        "o",
+        "r",
+        "e",
+        "m",
+        " ",
+        "i",
+        "p",
+        "s",
+        "u",
+        "m"
+      ]
+    },
+    {
+      "id": "8848a762-d9cb-45dd-a0a8-365d5a448744",
+      "isDone": false,
+      "project": "work",
+      "type": "epic",
+      "status": "design",
+      "duration": "3w",
+      "summary": "MASDFas",
+      "reporter": "Lorem",
+      "priority": "Medium",
+      "dateStart": "2024-07-02",
+      "updated": "2024-07-02",
+      "dateTo": "2024-07-18",
+      "description": "<p>Some initial content</p>",
+      "blocks": "is blocked by",
+      "assigneeValue": [
+        "John Nash"
+      ],
+      "relatedIssues": [
+        "SDFa",
+        "Lorem ipsum"
+      ]
+    },
+    {
+      "id": "cb93af7e-a3ff-403b-bb68-2445f1fcd840",
+      "isDone": false,
+      "project": "work",
+      "type": "bug",
+      "status": "launch",
+      "duration": "5w",
+      "summary": "DWER",
+      "reporter": "Salom",
+      "priority": "Medium",
+      "dateStart": "2024-07-02",
+      "updated": "2024-07-02",
+      "dateTo": "2024-07-18",
+      "description": "<p>Some initial content</p>",
+      "blocks": "",
+      "assigneeValue": [
+        "Wichk"
+      ],
+      "relatedIssues": [
+        "HOKK",
+        "MASDF",
+        "SDFa"
+      ]
+    },
+    {
+      "id": "a1176ee8-f24d-4f6e-9737-11edbca23165",
+      "isDone": false,
+      "project": "work",
+      "type": "epic",
+      "status": "launch",
+      "duration": "2w",
+      "summary": "EADSD",
+      "reporter": "Salom",
+      "priority": "high",
+      "dateStart": "2024-07-02",
+      "updated": "2024-07-02",
+      "dateTo": "2024-07-25",
+      "description": "<p>Some initial content</p>",
+      "blocks": "is blocked by",
+      "assigneeValue": [
+        "John Nash"
+      ],
+      "relatedIssues": [
+        "SDFa",
+        "Lorem ipsum",
+        "MASDF"
+      ]
+    },
+    {
+      "id": "17aedab3-e7d2-49ec-9b6d-b961b5e34d40",
+      "project": "work",
+      "type": "bug",
+      "status": "design",
+      "duration": "3w",
+      "summary": "Hello world",
+      "reporter": "Yamal",
+      "priority": "low",
+      "dateStart": "2024-07-03",
+      "updated": "2024-07-03",
+      "dateTo": "2024-07-31",
+      "labels": "Lorem ipsum",
+      "description": "<p class=\"ql-align-center\"><em>Some initial content</em></p>",
+      "blocks": "is blocked by",
+      "assigneeValue": [
+        "Wichk"
+      ],
+      "relatedIssues": [
+        "MASDF",
+        "Lorem ipsum",
+        "SDFa"
+      ]
+    },
+    {
+      "id": "6ca299a5-2b53-4108-a236-1ec2ea77e35c",
+      "project": "work",
+      "type": "improvements",
+      "status": "testing",
+      "duration": "10w",
+      "summary": "DFGSDFSDF",
+      "reporter": "Wichk",
+      "priority": "high",
+      "dateStart": "2024-07-05",
+      "updated": "2024-07-05",
+      "dateTo": "2024-08-01",
+      "labels": "KLKLD",
+      "description": "<p class=\"ql-align-center\"><s><u>Some initial content</u></s></p>",
+      "blocks": "clones",
+      "assigneeValue": [
+        "adf"
+      ],
+      "relatedIssues": [
+        "DWER"
+      ]
+    },
+    {
+      "id": "2885955d-2a99-4bba-8ae8-16d93589536a",
+      "project": "work",
+      "type": "devops",
+      "status": "design",
+      "duration": "4w",
+      "summary": "JKJKSDFSDF",
+      "reporter": "Wichk",
+      "priority": "low",
+      "dateStart": "2024-07-05",
+      "updated": "2024-07-05",
+      "dateTo": "2024-07-25",
+      "labels": "Iopas",
+      "description": "<p class=\"ql-align-center\"><strong><em>Some initial content</em></strong></p>",
+      "blocks": "is cloned by",
+      "assigneeValue": [
+        "John Nash",
+        "Wichk"
+      ],
+      "relatedIssues": [
+        "DFGSDFSDF"
+      ]
+    }
+  ]
+}

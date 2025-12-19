@@ -40,6 +40,7 @@ export default {
     { src: "~/plugins/ant-design-vue", ssr: true },
     "~/plugins/router.ts",
     "~/plugins/axios.ts",
+    "~/plugins/vee-validate.ts",
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -57,7 +58,9 @@ export default {
   modules: ["vue2-editor/nuxt", "@nuxtjs/axios"],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: ["vee-validate/dist/rules"],
+  },
 
   // Tailwind config
   build: {

@@ -19,6 +19,7 @@
     "core-js": "^3.25.3",
     "nuxt": "^2.15.8",
     "uuid": "^10.0.0",
+    "vee-validate": "3.4.5",
     "vue": "^2.7.10",
     "vue-class-component": "^7.2.6",
     "vue-fragment": "^1.6.0",
@@ -29,11 +30,12 @@
   },
   "devDependencies": {
     "@nuxt/types": "^2.18.1",
-    "@nuxt/typescript-build": "^2.1.0",
+    "@nuxt/typescript-build": "^3.0.2",
     "@types/node": "^20.14.11",
     "@types/uuid": "^10.0.0",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.39",
-    "tailwindcss": "^3.4.4"
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.5.4"
   }
 }

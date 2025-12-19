@@ -1,3 +1,4 @@
+// @ts-ignore
 import { NuxtAxiosInstance } from "@nuxtjs/axios";
 import { Issue, User } from "~/types/types";
 

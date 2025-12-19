@@ -2,6 +2,7 @@
 import { v4 as uuidv4 } from "uuid";
 import Vue from "vue";
 import { addNewUser } from "~/services/api";
+
 export default Vue.extend({
   name: "CreateUserView",
   data() {
@@ -57,6 +58,7 @@ export default Vue.extend({
 <template>
   <div class="create-user-form__wrapper">
     <form @submit="handleSubmit">
+      rules="required" v-slot="{ errors }" tag="div" class="block relative" >
       <span class="create-user__title block w-full text-center"
         >Create user</span
       >

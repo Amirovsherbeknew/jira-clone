@@ -25,5 +25,5 @@
     "allowSyntheticDefaultImports": true
   },
   "exclude": ["node_modules", ".nuxt", "dist"],
-  "include": ["types/**/*.d.ts", "**/*.ts", "**/*.vue"]
+  "include": ["nuxt/config/js", "types/**/*.d.ts", "**/*.ts", "**/*.vue"]
 }
